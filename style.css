@@ -1,10 +1,14 @@
 * {
     background-color: teal;
 }
-displayCalc {
+.displayCalc {
+max-width: 300px;
 display:flex;
 flex-wrap: wrap;
 }
+.input {
+    width: 100%;
+}
 button {
-    width: auto;
+    width: 25%;
 }
