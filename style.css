@@ -1,3 +1,10 @@
 * {
     background-color: teal;
 }
+displayCalc {
+display:flex;
+flex-wrap: wrap;
+}
+button {
+    width: auto;
+}
