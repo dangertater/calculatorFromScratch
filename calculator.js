@@ -26,8 +26,7 @@ let add = document.getElementById("+")
 let subtract = document.getElementById("-")
 let power = document.getElementById("^")
 let dot = document.getElementById(".")
-let preEquationString = substring(0, i - 2)
-let postEquationString = substring(i + 2, input.value.length)
+
 //next several lines cause buttons on webpage to update input's value with the innerText
 zero.addEventListener("click", (e) => {
 	input.value = input.value + zero.innerText
@@ -119,36 +118,40 @@ let subtractEquation = (num1, num2) => {
 let operatorFinder = (string) => {
 	for (let i = 0; i < input.value.length; i++) {
 		let inputValue = input.value
-		if (input.value[i] === "^") {
+		let preEquationStringSliced = input.value.slice(0, i - 2)
+		let postEquationStringSliced = input.value.slice(i + 2)
+		if (inputValue[i] === "^") {
 			let inputValue =
-				preEquationString +
-				powerEquation(input.value[i - 1], input.value[i + 1]) +
-				postEquationString
+				preEquationStringSliced +
+				powerEquation(inputValue[i - 1], inputValue[i + 1]) +
+				postEquationStringSliced
 			return operatorFinder(inputValue)
-		} else if (input.value[i] === "*") {
+		} else if (inputValue[i] === "*") {
 			let inputValue =
-				preEquationString +
-				multiplyEquation(input.value[i - 1], input.value[i + 1]) +
-				postEquationString
+				preEquationStringSliced +
+				multiplyEquation(inputValue[i - 1], inputValue[i + 1]) +
+				postEquationStringSliced
 			return operatorFinder(inputValue)
-		} else if (input.value[i] === "/") {
+		} else if (inputValue[i] === "/") {
 			let inputValue =
-				preEquationString +
-				divideEquation(input.value[i - 1], input.value[i + 1]) +
-				postEquationString
+				preEquationStringSliced +
+				divideEquation(inputValue[i - 1], inputValue[i + 1]) +
+				postEquationStringSliced
 			return operatorFinder(inputValue)
-		} else if (input.value[i] === "+") {
+		} else if (inputValue[i] === "+") {
 			let inputValue =
-				preEquationString +
-				addEquation(input.value[i - 1], input.value[i + 1]) +
-				postEquationString
+				preEquationStringSliced +
+				addEquation(inputValue[i - 1], inputValue[i + 1]) +
+				postEquationStringSliced
 			return operatorFinder(inputValue)
-		} else if (input.value[i] === "-") {
+		} else if (inputValue[i] === "-") {
 			let inputValue =
-				preEquationString +
-				subtractEquation(input.value[i - 1], input.value[i + 1]) +
-				postEquationString
+				preEquationStringSliced +
+				subtractEquation(inputValue[i - 1], inputValue[i + 1]) +
+				postEquationStringSliced
 			return operatorFinder(inputValue)
+		} else {
+			return inputValue
 		}
 	}
 }
@@ -162,7 +165,7 @@ equals.addEventListener("click", (e) => {
 		} else if (lastCharacter === operators[i]) {
 			input.value = "you are garbage, dont put an operator as last character"
 		} else {
-			input.value = input.value
+			input.value = operatorFinder(input.value)
 		}
 	}
 })
