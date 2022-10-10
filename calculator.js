@@ -89,25 +89,26 @@ clear.addEventListener("click", (e) => {
 })
 
 //TODO all of these are shouting into the void probs
+//---- q4e - I am aware that I could do all of this inline probs, is good callback practice...those would be callbacks right?
 //solves power equations
 let powerEquation = (num1, num2) => {
-	Math.pow(num1, num2)
+	return Math.pow(parseInt(num1), parseInt(num2))
 }
 //solves multiplication equations
 let multiplyEquation = (num1, num2) => {
-	num1 * num2
+	return parseInt(num1) * parseInt(num2)
 }
 //solves division equations
 let divideEquation = (num1, num2) => {
-	num1 / num2
+	return parseInt(num1) / parseInt(num2)
 }
 //solves addition equations
 let addEquation = (num1, num2) => {
-	num1 + num2
+	return parseInt(parseInt(num1)) + parseInt(num2)
 }
 //solves subtraction equations
 let subtractEquation = (num1, num2) => {
-	num1 - num2
+	return parseInt(num1) - parseInt(num2)
 }
 
 //will loop through looking for operators prioritizing operators by order of operations
@@ -115,43 +116,43 @@ let subtractEquation = (num1, num2) => {
 //---- q4e - I am aware that I could do all of this inline probs, is good callback practice...those would be callbacks right?
 //---- q4e - i created inputValue variable beacuse without it the 'let input.value' variable assignment under the if statements
 //--------would have a red squigly line and say ', expected'...?
-let operatorFinder = (string) => {
+let operatorFinder = (inputValue) => {
 	for (let i = 0; i < input.value.length; i++) {
 		let inputValue = input.value
 		let preEquationStringSliced = input.value.slice(0, i - 2)
 		let postEquationStringSliced = input.value.slice(i + 2)
+		let preEle = [i - 1]
+		let postEle = [i + 1]
 		if (inputValue[i] === "^") {
-			let inputValue =
+			inputValue =
 				preEquationStringSliced +
-				powerEquation(inputValue[i - 1], inputValue[i + 1]) +
+				powerEquation(inputValue[preEle], inputValue[postEle]) +
 				postEquationStringSliced
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "*") {
-			let inputValue =
+			inputValue =
 				preEquationStringSliced +
-				multiplyEquation(inputValue[i - 1], inputValue[i + 1]) +
+				multiplyEquation(inputValue[preEle], inputValue[postEle]) +
 				postEquationStringSliced
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "/") {
-			let inputValue =
+			inputValue =
 				preEquationStringSliced +
-				divideEquation(inputValue[i - 1], inputValue[i + 1]) +
+				divideEquation(inputValue[preEle], inputValue[postEle]) +
 				postEquationStringSliced
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "+") {
-			let inputValue =
+			inputValue =
 				preEquationStringSliced +
-				addEquation(inputValue[i - 1], inputValue[i + 1]) +
+				addEquation(input.value[preEle], input.value[postEle]) +
 				postEquationStringSliced
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "-") {
-			let inputValue =
+			inputValue =
 				preEquationStringSliced +
-				subtractEquation(inputValue[i - 1], inputValue[i + 1]) +
+				subtractEquation(inputValue[preEle], inputValue[postEle]) +
 				postEquationStringSliced
 			return operatorFinder(inputValue)
-		} else {
-			return inputValue
 		}
 	}
 }
@@ -165,7 +166,8 @@ equals.addEventListener("click", (e) => {
 		} else if (lastCharacter === operators[i]) {
 			input.value = "you are garbage, dont put an operator as last character"
 		} else {
-			input.value = operatorFinder(input.value)
+			console.log("test")
+			return (input.value = operatorFinder(input.value))
 		}
 	}
 })
