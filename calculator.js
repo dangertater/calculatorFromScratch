@@ -1,3 +1,7 @@
+//q4e = questions for eric
+//TODO = reminders to myself to do it
+//
+
 let input = document.getElementById("input")
 let clear = document.getElementById("clear")
 let equals = document.getElementById("equals")
@@ -22,8 +26,9 @@ let add = document.getElementById("+")
 let subtract = document.getElementById("-")
 let power = document.getElementById("^")
 let dot = document.getElementById(".")
-
-//causes buttons to update input's value with the innerText
+let preEquationString = substring(0, i - 2)
+let postEquationString = substring(i + 2, input.value.length)
+//next several lines cause buttons on webpage to update input's value with the innerText
 zero.addEventListener("click", (e) => {
 	input.value = input.value + zero.innerText
 })
@@ -84,12 +89,68 @@ clear.addEventListener("click", (e) => {
 	input.value = ""
 })
 
+//TODO all of these are shouting into the void probs
+//solves power equations
+let powerEquation = (num1, num2) => {
+	Math.pow(num1, num2)
+}
+//solves multiplication equations
+let multiplyEquation = (num1, num2) => {
+	num1 * num2
+}
+//solves division equations
+let divideEquation = (num1, num2) => {
+	num1 / num2
+}
+//solves addition equations
+let addEquation = (num1, num2) => {
+	num1 + num2
+}
+//solves subtraction equations
+let subtractEquation = (num1, num2) => {
+	num1 - num2
+}
+
 //will loop through looking for operators prioritizing operators by order of operations
-//---- takes operator and immediately surrounding elements and calls a function to calculate them
-let operatorFinder = () => {
-    for (let i = 0; i<input.value.length;i++) {
-        if (input.value.includes(operators[i]))
-    }
+//---- takes operator and immediately surrounding elements and calls 'x'Equation to calculate them
+//---- q4e - I am aware that I could do all of this inline probs, is good callback practice...those would be callbacks right?
+//---- q4e - i created inputValue variable beacuse without it the 'let input.value' variable assignment under the if statements
+//--------would have a red squigly line and say ', expected'...?
+let operatorFinder = (string) => {
+	for (let i = 0; i < input.value.length; i++) {
+		let inputValue = input.value
+		if (input.value[i] === "^") {
+			let inputValue =
+				preEquationString +
+				powerEquation(input.value[i - 1], input.value[i + 1]) +
+				postEquationString
+			return operatorFinder(inputValue)
+		} else if (input.value[i] === "*") {
+			let inputValue =
+				preEquationString +
+				multiplyEquation(input.value[i - 1], input.value[i + 1]) +
+				postEquationString
+			return operatorFinder(inputValue)
+		} else if (input.value[i] === "/") {
+			let inputValue =
+				preEquationString +
+				divideEquation(input.value[i - 1], input.value[i + 1]) +
+				postEquationString
+			return operatorFinder(inputValue)
+		} else if (input.value[i] === "+") {
+			let inputValue =
+				preEquationString +
+				addEquation(input.value[i - 1], input.value[i + 1]) +
+				postEquationString
+			return operatorFinder(inputValue)
+		} else if (input.value[i] === "-") {
+			let inputValue =
+				preEquationString +
+				subtractEquation(input.value[i - 1], input.value[i + 1]) +
+				postEquationString
+			return operatorFinder(inputValue)
+		}
+	}
 }
 
 //evaluates string in input window, TODO change so hackers can't fuck it up
@@ -97,9 +158,9 @@ equals.addEventListener("click", (e) => {
 	for (let i = 0; i < operators.length; i++) {
 		let lastCharacter = input.value[input.value.length - 1]
 		if (input.value === "") {
-			input.value = "nothing to calculate"
+			input.value = "nothing to calculate...you bitch"
 		} else if (lastCharacter === operators[i]) {
-			input.value = "you are garbage, dont put an operator as last character."
+			input.value = "you are garbage, dont put an operator as last character"
 		} else {
 			input.value = input.value
 		}
