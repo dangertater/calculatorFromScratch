@@ -2,8 +2,6 @@ let input = document.getElementById("input")
 let clear = document.getElementById("clear")
 let equals = document.getElementById("equals")
 let buttonClass = document.getElementsByClassName("button")
-let parenthLeft = document.getElementById("(")
-let parenthRight = document.getElementById(")")
 let operators = ["+", "-", "*", "/", "^"]
 let numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 let zero = document.getElementById("0")
@@ -16,6 +14,8 @@ let six = document.getElementById("6")
 let seven = document.getElementById("7")
 let eight = document.getElementById("8")
 let nine = document.getElementById("9")
+let parenthLeft = document.getElementById("(")
+let parenthRight = document.getElementById(")")
 let multiply = document.getElementById("*")
 let divide = document.getElementById("/")
 let add = document.getElementById("+")
@@ -83,19 +83,34 @@ power.addEventListener("click", (e) => {
 clear.addEventListener("click", (e) => {
 	input.value = ""
 })
-//evaluates string in input window, will change so hackers can't fuck it up
+
+//will loop through looking for operators prioritizing operators by order of operations
+//---- takes operator and immediately surrounding elements and calls a function to calculate them
+let operatorFinder = () => {
+    for (let i = 0; i<input.value.length;i++) {
+        if (input.value.includes(operators[i]))
+    }
+}
+
+//evaluates string in input window, TODO change so hackers can't fuck it up
 equals.addEventListener("click", (e) => {
 	for (let i = 0; i < operators.length; i++) {
 		let lastCharacter = input.value[input.value.length - 1]
 		if (input.value === "") {
 			input.value = "nothing to calculate"
 		} else if (lastCharacter === operators[i]) {
-			input.value = "you are garbage, dont put operators last."
+			input.value = "you are garbage, dont put an operator as last character."
 		} else {
-			input.value = eval(input.value)
+			input.value = input.value
 		}
 	}
 })
+
+//Planned steps for making a lit calculator
+//----hit equals, send string to a function named X
+//----have function loop through in order of operations, and take i-1, i(which will be the operator), and i+1
+//----have that chunk of string calculated by another funcion Y, recursively call function X until only a single number is left.
+
 //test code for alerts on js
 // let button7 = document.getElementById("7")
 // button7.addEventListener("click", () => {
@@ -115,3 +130,19 @@ equals.addEventListener("click", (e) => {
 // 		}
 // 	}
 // })
+
+//prior to me deciding i am not going to use objects
+// ----let obj = {}
+// ----//will break down input windows string into smaller pieces and recompile preventing .eval necessity
+// ----let objMaker = () => {
+// ----	for (let i = 0; i < input.value.length; i++) {
+// ----		for (let j = 0; j < operators.length; j++)
+// ----			if (input.value[i] === operators[j]) {
+// ----				let obj = {
+// ----					first: input.value[i - 1],
+// ----					second: input.value[i],
+// ----					third: input.value[i + 1],
+// ----				}
+// ----			}
+// ----	}
+// ----}
