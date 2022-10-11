@@ -117,46 +117,53 @@ let subtractEquation = (num1, num2) => {
 //---- q4e - I am aware that I could do all of this inline probs, is good callback practice...those would be callbacks right?
 //---- q4e - i created inputValue variable beacuse without it the 'let input.value' variable assignment under the if statements
 //--------would have a red squigly line and say ', expected'...?
+
+
+//maybe look up string.split and then split on any operator, or
+//need two loops, one backwards one forawards to find nearest operators
+let newFunction = (indexOfOperator, inputValue) => {
+	for (let i = 0; i.includes() ;i++) {
+
+	}
+	for (let i = inputValue.length; i)
+}
+
 let operatorFinder = (inputValue) => {
 	for (let i = 0; i < input.value.length; i++) {
 		let inputValue = input.value
-		let preEquationStringSliced = input.value.slice(0, i)
-		let leftEquation1 =
-			preEquationStringSliced -
-			preEquationStringSliced[preEquationStringSliced.length]
-		let leftEquation2 = leftEquation1 - leftEquation1[leftEquation1.length]
-		let postEquationStringSliced = input.value.slice(i + 1)
+		let leftOfEquation = input.value.slice(0, i - 2)
+		let rightOfEquation = input.value.slice(i)
 		let preEle = i - 1
 		let postEle = i + 1
 		if (inputValue[i] === "^") {
 			inputValue =
-				leftEquation2 +
+				leftOfEquation +
 				powerEquation(inputValue[preEle], inputValue[postEle]) +
-				postEquationStringSliced
+				rightOfEquation
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "*") {
 			inputValue =
-				leftEquation2 +
+				leftOfEquation +
 				multiplyEquation(inputValue[preEle], inputValue[postEle]) +
-				postEquationStringSliced
+				rightOfEquation
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "/") {
 			inputValue =
-				leftEquation2 +
+				leftOfEquation +
 				divideEquation(inputValue[preEle], inputValue[postEle]) +
-				postEquationStringSliced
+				rightOfEquation
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "+") {
 			inputValue =
-				leftEquation2 +
+				leftOfEquation +
 				addEquation(input.value[preEle], input.value[postEle]) +
-				postEquationStringSliced
+				rightOfEquation
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "-") {
 			inputValue =
-				leftEquation2 +
+				leftOfEquation +
 				subtractEquation(inputValue[preEle], inputValue[postEle]) +
-				postEquationStringSliced
+				rightOfEquation
 			return operatorFinder(inputValue)
 		}
 	}
