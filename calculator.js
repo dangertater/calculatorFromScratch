@@ -104,8 +104,9 @@ let divideEquation = (num1, num2) => {
 }
 //solves addition equations
 let addEquation = (num1, num2) => {
-	return parseInt(parseInt(num1)) + parseInt(num2)
+	return parseInt(num1) + parseInt(num2)
 }
+window = window.addEquation
 //solves subtraction equations
 let subtractEquation = (num1, num2) => {
 	return parseInt(num1) - parseInt(num2)
@@ -119,37 +120,41 @@ let subtractEquation = (num1, num2) => {
 let operatorFinder = (inputValue) => {
 	for (let i = 0; i < input.value.length; i++) {
 		let inputValue = input.value
-		let preEquationStringSliced = input.value.slice(0, i - 2)
-		let postEquationStringSliced = input.value.slice(i + 2)
-		let preEle = [i - 1]
-		let postEle = [i + 1]
+		let preEquationStringSliced = input.value.slice(0, i)
+		let leftEquation1 =
+			preEquationStringSliced -
+			preEquationStringSliced[preEquationStringSliced.length]
+		let leftEquation2 = leftEquation1 - leftEquation1[leftEquation1.length]
+		let postEquationStringSliced = input.value.slice(i + 1)
+		let preEle = i - 1
+		let postEle = i + 1
 		if (inputValue[i] === "^") {
 			inputValue =
-				preEquationStringSliced +
+				leftEquation2 +
 				powerEquation(inputValue[preEle], inputValue[postEle]) +
 				postEquationStringSliced
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "*") {
 			inputValue =
-				preEquationStringSliced +
+				leftEquation2 +
 				multiplyEquation(inputValue[preEle], inputValue[postEle]) +
 				postEquationStringSliced
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "/") {
 			inputValue =
-				preEquationStringSliced +
+				leftEquation2 +
 				divideEquation(inputValue[preEle], inputValue[postEle]) +
 				postEquationStringSliced
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "+") {
 			inputValue =
-				preEquationStringSliced +
+				leftEquation2 +
 				addEquation(input.value[preEle], input.value[postEle]) +
 				postEquationStringSliced
 			return operatorFinder(inputValue)
 		} else if (inputValue[i] === "-") {
 			inputValue =
-				preEquationStringSliced +
+				leftEquation2 +
 				subtractEquation(inputValue[preEle], inputValue[postEle]) +
 				postEquationStringSliced
 			return operatorFinder(inputValue)
